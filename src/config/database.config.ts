@@ -23,7 +23,7 @@ export default registerAs(DatabaseConfigName, () => ({
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || '',
-  synchronize: process.env.DB_SYNCHRONIZE === 'true' || false,
+  synchronize: process.env.NODE_ENV === 'development',
   logging: process.env.DB_LOGGING === 'true' || false,
   maxConnections: parseInt(process.env.DB_MAX_POOL_SIZE || '10'),
   minConnections: parseInt(process.env.DB_MIN_POOL_SIZE || '2'),

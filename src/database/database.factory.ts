@@ -3,7 +3,6 @@ import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseConfig, DatabaseConfigName } from '../config/database.config';
 import { ServerConfig, ServerConfigName } from 'src/config/server.config';
-// import { ServerConfig, ServerConfigName } from '../config/server.config';
 
 @Injectable()
 export class DatabaseFactory implements TypeOrmOptionsFactory {
@@ -14,13 +13,21 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     const dbConfig =
       this.configService.getOrThrow<DatabaseConfig>(DatabaseConfigName);
-    
+
+    // database.config.ts (registerAs)
+    //    ↓
+    // ConfigService (NestJS)
+    //    ↓
+    // database.factory.ts (getOrThrow)
+    //    ↓
+    // TypeOrmModule
+
     const serverConfig =
       this.configService.getOrThrow<ServerConfig>(ServerConfigName);
 
     // Log database connection info (hide password)
     this.logger.debug(
-      `Database Connection: ${dbConfig.username}@${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`
+      `Database Connection: ${dbConfig.username}@${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`,
     );
 
     const options: TypeOrmModuleOptions = {
@@ -30,16 +37,16 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
       username: dbConfig.username,
       password: dbConfig.password,
       database: dbConfig.database,
-      
+
       // Auto load all entities
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      
+
       // Synchronize schema (only for development)
       synchronize: dbConfig.synchronize,
-      
+
       // Enable/disable logging
       logging: dbConfig.logging || serverConfig.nodeEnv === 'development',
-      
+
       // Connection pool settings
       extra: {
         max: dbConfig.maxConnections,
@@ -53,18 +60,20 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
       },
 
       // SSL configuration (for production)
-      ssl: dbConfig.ssl ? {
-        rejectUnauthorized: false, // Set to true in production with proper certificates
-      } : false,
+      ssl: dbConfig.ssl
+        ? {
+            rejectUnauthorized: false, // Set to true in production with proper certificates
+          }
+        : false,
 
       // Retry connection
       retryAttempts: 10,
       retryDelay: 3000,
-      
+
       // Auto load subscribers and migrations
       subscribers: [__dirname + '/../**/*.subscriber{.ts,.js}'],
       migrations: [__dirname + '/../migrations/*{.ts,.js}'],
-      
+
       // CLI config for migrations
       migrationsRun: false, // Set to true to auto-run migrations on startup
     };
@@ -72,7 +81,7 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
     // Warning for production
     if (serverConfig.nodeEnv === 'production' && dbConfig.synchronize) {
       this.logger.warn(
-        '⚠️  WARNING: synchronize is enabled in production! This should be disabled and use migrations instead.'
+        '⚠️  WARNING: synchronize is enabled in production! This should be disabled and use migrations instead.',
       );
     }
 

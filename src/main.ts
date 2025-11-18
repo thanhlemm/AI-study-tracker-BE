@@ -9,5 +9,7 @@ async function bootstrap() {
   const serverConfig = configService.getOrThrow<ServerConfig>(ServerConfigName);
 
   await app.listen(serverConfig.port);
+    console.log(`✅ Application is running on: http://localhost:${serverConfig.port}`);
+
 }
 bootstrap();
