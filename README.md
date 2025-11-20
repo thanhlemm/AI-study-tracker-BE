@@ -1,98 +1,77 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# AI Study Tracker Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This repository hosts the backend for the **AI Study Tracker** application, built with NestJS. The app is an AI-powered study management tool designed for users preparing for exams like IELTS, TOEIC, HSK, TOPIK, or any custom subjects. Users can configure their own study areas, track sessions, and receive AI-driven insights to analyze performance weaknesses and generate personalized study schedules.
 
-## Description
+**Important Note:** This project is currently in the conceptual and planning stage. It represents an idea for a backend implementation and has not been fully developed or completed yet. The code here may include initial setups, prototypes, or placeholders, and contributions or expansions are welcome as the project progresses.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## ⚙️ Key Features (Planned)
 
-## Project setup
+The backend will support the following core functionalities:
 
-```bash
-$ pnpm install
-```
+### 1. Study Management Structure
+- **Study Areas**: Users can create customizable fields of study (e.g., IELTS, TOEIC, JavaScript Programming).
+- **Skills/Sections**: Nested under Study Areas, allowing users to define sub-sections (e.g., Listening, Reading for IELTS; Chapters for programming subjects).
+- **Sessions/Logs**: Users log individual study sessions with details like date, duration, content, scores, difficulty level, and notes. This data serves as input for AI analysis.
 
-## Compile and run the project
+All configurations are user-driven—no hardcoded structures—to allow flexibility for any learning domain.
 
-```bash
-# development
-$ pnpm run start
+### 2. AI-Powered Insights
+- **Performance Analysis**: AI engine processes session data to identify weaknesses, such as low-scoring sections, inconsistent study habits, or recurring issues from notes.
+  - Examples of AI outputs:
+    - "Your weakest area is IELTS Reading – Matching Headings, with low scores in the last 3 sessions."
+    - "You skip studies on Thursdays and Fridays – suggest shifting Listening practice to these days."
+    - "Notes indicate struggles with Grammar Tenses – recommend 30 minutes daily on this topic."
+- Integration: Backend will handle data aggregation and API calls to an AI service (e.g., OpenAI or a custom model) to generate insights in JSON format.
 
-# watch mode
-$ pnpm run start:dev
+### 3. Smart Study Scheduling
+- AI-generated personalized schedules based on user goals, available time, weak areas, and study frequency.
+  - Example schedule:
+    - Monday: Listening – 45 minutes
+    - Tuesday: Reading – 60 minutes
+    - Thursday: Writing Task 2 – 40 minutes
+    - Sunday: Mock Test
+- Workflow: Frontend sends study data to backend; backend processes via AI and returns a JSON schedule.
 
-# production mode
-$ pnpm run start:prod
-```
+### 4. Core Backend Capabilities
+- **Authentication**: User registration, login, and JWT-based auth for secure access.
+- **CRUD Operations**: Full create/read/update/delete support for study entities.
+- **Data Storage**: Persistent storage for user data, sessions, and AI outputs.
+- **API Endpoints**: RESTful APIs for frontend integration (e.g., Next.js).
 
-## Run tests
+## Tech Stack
+- **Framework**: NestJS (TypeScript)
+- **Database**: PostgreSQL with TypeORM.
+- **Authentication**: JWT with libraries `@nestjs/passport`.
+- **AI Integration**: External AI APIs (e.g., OpenAI) for analysis and scheduling.
+- **Other**: Validation with class-validator, error handling, and logging.
 
-```bash
-# unit tests
-$ pnpm run test
+## Installation (Prototype Setup)
 
-# e2e tests
-$ pnpm run test:e2e
+1. Clone the repository:
+   ```
+   git clone https://github.com/thanhlemm/AI-study-tracker-BE
+   cd ai-study-tracker-backend
+   ```
 
-# test coverage
-$ pnpm run test:cov
-```
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-## Deployment
+3. Set up environment variables: Create a `.env` file in the root directory
+ 
+## Running the Project
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- Development mode:
+  ```
+  npm run start:dev
+  ```
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- Production mode:
+  ```
+  npm run start:prod
+  ```
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+The server will run on `http://localhost:8080` by default.
