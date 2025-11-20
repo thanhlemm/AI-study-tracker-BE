@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseConfig, DatabaseConfigName } from '../config/database.config';
-import { ServerConfig, ServerConfigName } from 'src/config/server.config';
+import { ServerConfig, ServerConfigName } from '@/config/server.config';
 
 @Injectable()
 export class DatabaseFactory implements TypeOrmOptionsFactory {
@@ -45,7 +45,8 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
       synchronize: dbConfig.synchronize,
 
       // Enable/disable logging
-      logging: dbConfig.logging || serverConfig.nodeEnv === 'development',
+      // logging: dbConfig.logging || serverConfig.nodeEnv === 'development',
+      // logging: ['error', 'warn'],
 
       // Connection pool settings
       extra: {
@@ -72,10 +73,10 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
 
       // Auto load subscribers and migrations
       subscribers: [__dirname + '/../**/*.subscriber{.ts,.js}'],
-      migrations: [__dirname + '/../migrations/*{.ts,.js}'],
+      migrations: dbConfig.migrations,
 
       // CLI config for migrations
-      migrationsRun: false, // Set to true to auto-run migrations on startup
+      migrationsRun: dbConfig.migrationsRun, // Set to true to auto-run migrations on startup
     };
 
     // Warning for production

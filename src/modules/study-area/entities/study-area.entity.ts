@@ -1,7 +1,7 @@
-import { AiInsightEntity } from 'src/modules/ai-insight/entities/ai-insight.entity';
-import { LearningGoalEntity } from 'src/modules/learning-goal/entities/learning-goal.entity';
-import { SkillEntity } from 'src/modules/skill/entities/skill.entity';
-import { UserEntity } from 'src/modules/user/entities/user.entity';
+import { AiInsightEntity } from '@/modules/ai-insight/entities/ai-insight.entity';
+import { LearningGoalEntity } from '@/modules/learning-goal/entities/learning-goal.entity';
+import { SkillEntity } from '@/modules/skill/entities/skill.entity';
+import { UserEntity } from '@/modules/user/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

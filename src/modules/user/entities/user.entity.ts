@@ -1,8 +1,8 @@
-import { AiInsightEntity } from 'src/modules/ai-insight/entities/ai-insight.entity';
-import { LearningGoalEntity } from 'src/modules/learning-goal/entities/learning-goal.entity';
-import { StudyAreaEntity } from 'src/modules/study-area/entities/study-area.entity';
-import { StudyScheduleEntity } from 'src/modules/study-schedule/entities/study-schedule.entity';
-import { StudySessionEntity } from 'src/modules/study-session/entities/study-session.entity';
+import { StudySessionEntity } from '@/modules/study-session/entities/study-session.entity';
+import { AiInsightEntity } from '@/modules/ai-insight/entities/ai-insight.entity';
+import { LearningGoalEntity } from '@/modules/learning-goal/entities/learning-goal.entity';
+import { StudyAreaEntity } from '@/modules/study-area/entities/study-area.entity';
+import { StudyScheduleEntity } from '@/modules/study-schedule/entities/study-schedule.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -12,6 +12,7 @@ import {
   DeleteDateColumn,
   OneToMany,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class UserEntity {
@@ -22,7 +23,8 @@ export class UserEntity {
   email: string;
 
   @Column({ type: 'varchar', length: 255 })
-  passwordHash: string;
+  @Exclude()
+  password: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   name: string;
@@ -42,6 +44,10 @@ export class UserEntity {
 
   @Column({ type: 'json', nullable: true })
   preferredStudyTimes: string[]; // ["morning", "evening"]
+
+  @Column({ nullable: true })
+  @Exclude()
+  hashedRefreshToken: string;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -1,6 +1,6 @@
-import { AiInsightEntity } from 'src/modules/ai-insight/entities/ai-insight.entity';
-import { StudyAreaEntity } from 'src/modules/study-area/entities/study-area.entity';
-import { StudySessionEntity } from 'src/modules/study-session/entities/study-session.entity';
+import { AiInsightEntity } from '@/modules/ai-insight/entities/ai-insight.entity';
+import { StudyAreaEntity } from '@/modules/study-area/entities/study-area.entity';
+import { StudySessionEntity } from '@/modules/study-session/entities/study-session.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
