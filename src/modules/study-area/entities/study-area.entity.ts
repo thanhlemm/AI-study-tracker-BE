@@ -13,6 +13,7 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
+import { ProficiencyLevelEnum } from '../dto/create-study-area.dto';
 
 @Entity('study_areas')
 @Index(['userId', 'name'], { unique: true })
@@ -47,7 +48,7 @@ export class StudyAreaEntity {
     length: 50,
     nullable: true,
   })
-  proficiencyLevel: string; // "beginner", "intermediate", "advanced"
+  proficiencyLevel: ProficiencyLevelEnum; // "beginner", "intermediate", "advanced"
 
   @CreateDateColumn()
   createdAt: Date;

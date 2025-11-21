@@ -16,6 +16,8 @@ import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, ChangePasswordDto } from './dto';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth/jwt-auth.guard';
 import { Public } from '@/common/decorators/public.decorator';
+import { CurrentUser } from '@/common/decorators/current-user.decorator';
+import { UserEntity } from './entities/user.entity';
 
 @Controller('users')
 export class UserController {
@@ -29,17 +31,17 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  getProfile(@Req() req) {
-    return this.userService.findOne(req.user.id);
+  getProfile(@CurrentUser() user: UserEntity) {
+    return user;
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch('me')
   update(
+    @CurrentUser('id') userId: string,
     @Body(new ValidationPipe()) updateUserDto: UpdateUserDto,
-    @Request() req,
   ) {
-    return this.userService.update(req.user.id, updateUserDto);
+    return this.userService.update(userId, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -55,8 +57,6 @@ export class UserController {
     @Body(new ValidationPipe()) changePasswordDto: ChangePasswordDto,
     @Request() req,
   ) {
-  
-
     return this.userService.changePassword(req.user.id, changePasswordDto);
   }
 }
